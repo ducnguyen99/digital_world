@@ -1,4 +1,4 @@
-footer {
+/* footer {
     position: relative;
     bottom: 0;
     width: 100%;
@@ -26,7 +26,7 @@ footer ul {
 footer ul li {
     float: left;
     margin-left: 15px;
-}
+} */
 
 .cart-btn {
     position: relative;
@@ -44,26 +44,12 @@ footer ul li {
     font-size: medium
 }
 
-.header {
-    position: sticky;
-    top: 0;
-    height: 50px;
-    width: 100%;
-    display: block;
-    align-items: center;
-    background: rgb(7, 6, 6);
-    margin-bottom: 0;
-    z-index: 1;
-}
-
 .logo {
     width: auto;
     height: 100%;
-    padding: 0 1.5rem;
-    float: left;
     font-size: xx-large;
-    color: greenyellow;
-    align-items: center;
+    color: greenyellow!important;
+    font-family: cursive
 }
 
 .login-btn {
@@ -78,12 +64,10 @@ footer ul li {
 .cart {
     width: auto;
     height: 90%;
-    margin-top: 2px;
-    padding: 0 1.5rem;
-    float: right;
     display: flex;
     align-items: center;
-    margin: auto;
+    margin-top: 3px;
+    /* margin-left: 10px */
 }
 
 body {
@@ -92,9 +76,11 @@ body {
 
 .box-element {
     box-shadow: hsl(0, 0%, 80%) 0 0 16px;
-    background-color: #fff;
+    background-color: #ffffff;
+    /* background-color: rgb(206, 60, 206); */
     border-radius: 4px;
     padding: 10px;
+    opacity: 1;
 }
 
 .thumbnail {
@@ -197,8 +183,16 @@ body {
 /* Login */
 
 .box-element.login {
+    box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+    background-color: rgb(206, 60, 206);
+    border-radius: 4px;
+    padding: 10px;
+    opacity: 1;
     margin-top: 100px;
     width: 100%;
 }
 
-.bgimg-1 {}
+
+/* li.nav-item {
+    margin-left: 10px
+} */

@@ -11,7 +11,7 @@ class Product(models.Model):
     name = models.CharField(max_length = 120)
     price = models.DecimalField(max_digits = 7, decimal_places=2 )
     category = models.CharField(max_length=120, choices=CATEGORY, null=True)
-    image = models.ImageField(null = True, blank = True, upload_to='static/media')
+    image = models.ImageField(null = True, blank = True, upload_to='product_image/')
     
     def __str__(self):
         return self.name
