@@ -15,6 +15,6 @@ def cart(request):
     context = {}
     return render(request, 'cart.html', context)
 
-def login(request):
+def checkout(request):
     context = {}
-    return render(request, 'login.html', context)
+    return render(request, 'checkout.html', context)

@@ -1,0 +1,76 @@
+{% extends "main.html" %} {% load static %} {% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
+            <div class="cart-row">
+                <div style="flex:2"><img class="row-image" src="{% static 'products/images/placeholder.png' %}"></div>
+                <div style="flex:2">
+                    <p>Product 1</p>
+                </div>
+                <div style="flex:1">
+                    <p>$20.00</p>
+                </div>
+                <div style="flex:1">
+                    <p>x2</p>
+                </div>
+            </div>
+            <h5>Items: 2</h5>
+            <h5>Total: $40</h5>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box-element" id="form-wrapper">
+            <form id="form">
+                <div id="user-info">
+                    <h2>Your detail</h2>
+                    <hr>
+                    <div class="form-field">
+                        <label for="name">Name</label>
+                        <input required class="form-control" type="text" name="name" placeholder="Name.." id="name">
+                    </div>
+                    <div class="form-field">
+                        <label for="email">Email</label>
+                        <input required class="form-control" type="email" name="email" placeholder="Email.." id="email">
+                    </div>
+                </div>
+
+                <div id="shipping-info">
+                    <hr>
+                    <h2>Shipping Information:</h2>
+                    <hr>
+                    <div class="form-field">
+                        <label for="address">Address</label>
+                        <input class="form-control" type="text" name="address" placeholder="Address.." id="address">
+                    </div>
+                    <div class="form-field">
+                        <label for="city">City</label>
+                        <input class="form-control" type="text" name="city" placeholder="City.." id="city">
+                    </div>
+                    <div class="form-field">
+                        <label for="state">State </label>
+                        <input class="form-control" type="text" name="state" placeholder="State.." id="state">
+                    </div>
+                    <div class="form-field">
+                        <label for="zipcode">Zip Code</label>
+                        <input class="form-control" type="text" name="zipcode" placeholder="Zip code.." id="zipcode">
+                    </div>
+                </div>
+                <hr>
+                <input id="form-button" class="btn btn-success btn-block" type="submit" value="Continue">
+            </form>
+
+            <br>
+            <div class="box-element hidden" id="payment-info">
+                <small>Paypal Options</small>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock content %}
