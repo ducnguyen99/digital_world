@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Product(models.Model):
@@ -11,21 +11,25 @@ class Product(models.Model):
     name = models.CharField(max_length = 120)
     price = models.DecimalField(max_digits = 7, decimal_places=2 )
     category = models.CharField(max_length=120, choices=CATEGORY, null=True)
-    image = models.ImageField(null = True, blank = True, upload_to='product_image/')
+    image = models.ImageField(null = True, blank = True)
     
     def __str__(self):
         return self.name
     
+    @property
+    def imgURL(self):
+        try:
+            url = self.image.url
+        except:
+            url = ''
+        return url
 class Customer(models.Model):
-    username = models.CharField(max_length = 120) 
-    name = models.CharField(max_length = 120)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length = 120)
 
     def __str__(self):
-        return self.name
+        return str(self.user)
 
-    def __unicode__(self):
-        return self.name
 
 class Order(models.Model):
     STATUS_CHOICES = [

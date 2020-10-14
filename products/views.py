@@ -5,10 +5,15 @@ from .models import *
 
 def product(request):
     products = Product.objects.all()
+    customer = Customer.objects.all()
+    print(customer)
+    for i in customer:
+        print(i.user)
+    user = request.user
     context = {
         'products': products,
+        'user': user
     }
-    print(products)
     return render(request, 'product.html', context)
 
 def cart(request):
