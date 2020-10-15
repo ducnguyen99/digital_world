@@ -1,15 +1,15 @@
 from django.shortcuts import render
 from .models import *
+
 # Create your views here.
 
 
 def product(request):
     products = Product.objects.all()
     customer = Customer.objects.all()
-    print(customer)
-    for i in customer:
-        print(i.user)
     user = request.user
+    print(user.is_authenticated)
+    print(type(user))
     context = {
         'products': products,
         'user': user

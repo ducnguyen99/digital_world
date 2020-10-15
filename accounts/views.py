@@ -5,14 +5,15 @@ from django.contrib.auth import authenticate, login, logout
 def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
-        print(request.body)
-        print(request)
         form = CreateUserForm(request.POST)
-        print(form.errors)
         if form.is_valid():
-            print('valid')
-            form.save()
-            return redirect('product')
+            user = form.save()
+            username = request.POST.get('username')
+            password = request.POST.get('password1')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('product')
     context = {
         'form': form
     }

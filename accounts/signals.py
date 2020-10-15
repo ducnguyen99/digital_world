@@ -3,11 +3,10 @@ from django.contrib.auth.models import User, Group
 from .models import Customer
 
 def customer_profile(sender, instance, created, **kwargs):
+    print('this is from signals: ', created)
     if created:
         group, created = Group.objects.get_or_create(name='customer')
         instance.groups.add(group)
-        Customer.objects.create(user=instance, name=instance.username)
-        print('profile created')
-        print(instance)
+        Customer.objects.create(user=instance)
 
 post_save.connect(customer_profile, sender=User)

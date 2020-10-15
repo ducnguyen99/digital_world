@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from accounts.models import Customer
 # Create your models here.
 
 class Product(models.Model):
@@ -23,12 +24,7 @@ class Product(models.Model):
         except:
             url = ''
         return url
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email = models.EmailField(max_length = 120)
 
-    def __str__(self):
-        return str(self.user)
 
 
 class Order(models.Model):

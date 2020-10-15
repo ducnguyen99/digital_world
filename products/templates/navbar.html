@@ -20,9 +20,21 @@
             </ul>
             <ul class="navbar-nav justify-content-between">
 
-                    <li class="nav-item ml-md-3 active">
-                        <a href="{% url 'logout' %}" class="nav-link" style="font-size: 20px;"> <i class="fas fa-user-circle"></i> My Account </a>
+                {% if user.is_authenticated %}
+                    <li class="nav-item ml-md-3 active dropdown">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 20px;"> 
+                            <i class="fas fa-user-circle"></i> Hi, {{user.first_name}}
+                        </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Setting</a>
+                        <a class="dropdown-item" href="{%url 'logout'%}"> Logout </a>
+                    </div>
                     </li>
+                {% else %}
+                    <li class="nav-item ml-md-3 active">
+                        <a href="{% url 'login' %}" class="nav-link" style="font-size: 20px;"> <i class="fas fa-user-circle"></i> My Account </a>
+                    </li>
+                {% endif %}
                 <li class="nav-item ml-md-3">
                     <div class='cart'>
                         <div class="cart-btn">
