@@ -21,25 +21,26 @@
             <ul class="navbar-nav justify-content-between">
 
                 {% if user.is_authenticated %}
-                    <li class="nav-item ml-md-3 active dropdown">
-                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 20px;"> 
-                            <i class="fas fa-user-circle"></i> Hi, {{user.first_name}}
-                        </a>
+                <li class="nav-item ml-md-3 active dropdown">
+                    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 20px;">
+                        <i class="fas fa-user-circle"></i> Hi, {{user.first_name}}
+                    </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Setting</a>
                         <a class="dropdown-item" href="{%url 'logout'%}"> Logout </a>
                     </div>
-                    </li>
+                </li>
                 {% else %}
-                    <li class="nav-item ml-md-3 active">
-                        <a href="{% url 'login' %}" class="nav-link" style="font-size: 20px;"> <i class="fas fa-user-circle"></i> My Account </a>
-                    </li>
+                <li class="nav-item ml-md-3 active">
+                    <a href="{% url 'login' %}" class="nav-link" style="font-size: 20px;"> <i class="fas fa-user-circle"></i> My Account </a>
+                </li>
                 {% endif %}
                 <li class="nav-item ml-md-3">
                     <div class='cart'>
                         <div class="cart-btn">
-                            <a href="{% url 'cart'%}"><i class="fas fa-shopping-cart" style="color:white; font-size:20px"></i></a>
-                            <div class="cart-items">0</div>
+                            <a href="{% url 'cart'%}"> <i class="fas fa-shopping-cart" style="color:white; font-size:20px"></i>
+                                <div class="cart-items">{{cart_total}}</div>
+                            </a>
                         </div>
                     </div>
                 </li>

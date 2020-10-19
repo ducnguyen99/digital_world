@@ -1,31 +1,9 @@
 {% extends "main.html" %} {% load static %} {% block content %}
 <div class="row">
-    <div class="col-md-6">
-        <div class="box-element">
-            <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
-            <hr>
-            <h3>Order Summary</h3>
-            <hr>
-            <div class="cart-row">
-                <div style="flex:2"><img class="row-image" src="{% static 'products/images/placeholder.png' %}"></div>
-                <div style="flex:2">
-                    <p>Product 1</p>
-                </div>
-                <div style="flex:1">
-                    <p>$20.00</p>
-                </div>
-                <div style="flex:1">
-                    <p>x2</p>
-                </div>
-            </div>
-            <h5>Items: 2</h5>
-            <h5>Total: $40</h5>
-        </div>
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-12">
         <div class="box-element" id="form-wrapper">
             <form id="form">
-                <div id="user-info">
+                <!-- <div id="user-info">
                     <h2>Your detail</h2>
                     <hr>
                     <div class="form-field">
@@ -36,8 +14,26 @@
                         <label for="email">Email</label>
                         <input required class="form-control" type="email" name="email" placeholder="Email.." id="email">
                     </div>
+                </div> -->
+                <div class="shipping-option">
+                    <h2>Shipping Option:</h2>
+                    <hr>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio" data-option="pickup" id="pickup" onclick="shipping()">Pickup at store
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio" data-option="standard" id="standard-delivery" onclick="shipping()">Standard Delivery (5 - 7 days)
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optradio" data-option="express" id="express-delivery" onclick="shipping()">Express Delivery (1 - 3 days)
+                        </label>
+                    </div>
                 </div>
-
                 <div id="shipping-info">
                     <hr>
                     <h2>Shipping Information:</h2>
@@ -71,6 +67,37 @@
 
     </div>
 
+    <div class="col-md-6 col-sm-12">
+        <div class="box-element">
+            <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
+            <hr>
+            <h3>Order Summary</h3>
+            <hr>
+            {% for item in ordered_product %}
+                <div class="cart-row align-items-center">
+                    <div class="flex-item-first">
+                        <img class="row-image" src="{{item.product.imgURL}}">
+                        <p class="d-inline-block"> <strong> {{item.product}} </strong></p>
+                    </div>
+                    <div class="flex-item d-sm-block d-md-flex justify-content-between align-items-center">
+                        <p class="quantity">x{{item.quantity}}</p>
+                        <p>${{item.total}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+                <div class="d-flex justify-content-between">
+                    <div id="shipping-option"><p>Shipping ({{order.delivery_option}})</p></div>
+                    <div id="shipping-price"><p>${{order.delivery_price}}</p></div>
+                </div>
 
+                <div class="d-flex justify-content-between">
+                    <div><p>Subtotal</p></div>
+                    <div><p>${{order.get_total_item_price}}</p></div>
+                </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+            <h4>Order Total: ${{order.get_total_order_price}}</h4></div>
+        </div>
+    </div>
 </div>
 {% endblock content %}
