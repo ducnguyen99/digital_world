@@ -38,15 +38,15 @@ class Order(models.Model):
     ]
 
     PRICE_OPTION = [
-        (0, 0),
-        (5, 5),
-        (12, 12),
+        (0.00, 0.00),
+        (5.00, 5.00),
+        (12.00, 12.00),
     ]
-    customer_name = models.ForeignKey(Customer, on_delete=models.CASCADE, null = True) # should be set null = False
+    customer_name = models.ForeignKey(Customer, on_delete=models.CASCADE, null=True, blank=True) # should be set null = False
     date_ordered = models.DateField(auto_now_add=True)
     delivery_option = models.CharField( max_length= 120, choices=DELIVERY_OPTION, default='Pickup')  
     status = models.CharField(max_length= 120, choices=STATUS_CHOICES, default='Pending') 
-    delivery_price = models.DecimalField(blank=True, null=True, max_digits = 7, decimal_places=2, choices=PRICE_OPTION, default=0)
+    delivery_price = models.DecimalField(blank=True, null=True, max_digits = 7, decimal_places=2, choices= PRICE_OPTION, default=0.00)
 
     def __str__(self):
         return str(self.id)
@@ -59,7 +59,7 @@ class Order(models.Model):
 
     @property
     def get_total_order_price(self):
-        total = self.get_total_item_price + int(self.delivery_price)
+        total = self.get_total_item_price + self.delivery_price
         return total
 
     @property
@@ -87,6 +87,8 @@ class OrderedProduct(models.Model):
 
 
 class ShippingAddress(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     address = models.CharField(max_length=120)
     city = models.CharField(max_length=120)
     state = models.CharField(max_length=120)

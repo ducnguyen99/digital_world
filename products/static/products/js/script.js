@@ -23,7 +23,7 @@ for (let i = 0; i < updateBtns.length; i++) {
         var action = this.dataset.action
         if (user === 'AnonymousUser') {
             console.log('Not authenticated')
-                // addCookieItem(productId, action)
+            addCookieItem(productId, action)
         } else {
             updateUserOrder(productId, action)
         }
@@ -31,30 +31,7 @@ for (let i = 0; i < updateBtns.length; i++) {
 }
 
 // Can optimize this
-var radioBtns = document.getElementById('pickup').onclick = function() {
-    var deliveryOption = this.dataset.option
-    updateOrderDelivery(deliveryOption)
-}
-var radioBtns = document.getElementById('standard-delivery').onclick = function() {
-    var deliveryOption = this.dataset.option
-    updateOrderDelivery(deliveryOption)
-}
-var radioBtns = document.getElementById('express-delivery').onclick = function() {
-    var deliveryOption = this.dataset.option
-    updateOrderDelivery(deliveryOption)
-}
 
-// Can optimize this
-
-if (shipping_option === "Express Delivery") {
-    document.getElementById('express-delivery').checked = true
-
-} else if (shipping_option === "Standard Delivery") {
-    document.getElementById('standard-delivery').checked = true
-} else {
-    document.getElementById('pickup').checked = true
-    document.getElementById("shipping-info").classList.add('hidden');
-}
 
 
 function updateUserOrder(productId, action) {
@@ -96,9 +73,28 @@ function updateOrderDelivery(deliveryOption) {
         })
 }
 
-// function shippingInfo() {
-//     var radioBtns = document.getElementById('standard-delivery')
-//     if (radioBtns.checked()) {
-//         document.getElementById("shipping-info").classList.remove('hidden');
-//     }
-// }
+
+function addCookieItem(productId, action) {
+    console.log('not log in')
+    if (action == 'add') {
+        if (cart[productId] == undefined) {
+            cart[productId] = { 'quantity': 1 }
+        } else {
+            cart[productId]['quantity'] += 1
+        }
+    }
+
+    if (action == 'remove') {
+        cart[productId]['quantity'] -= 1
+
+        if (cart[productId]['quantity'] <= 0) {
+            console.log('Item should be deleted')
+            delete cart[productId];
+        }
+    }
+
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+    console.log('Cart', cart)
+    location.reload()
+
+}

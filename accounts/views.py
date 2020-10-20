@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout 
+from products import utils
+import json
 # Create your views here.
 def register_page(request):
     form = CreateUserForm()
@@ -20,6 +22,7 @@ def register_page(request):
     return render(request, 'register.html', context)
 
 def login_page(request):
+
     if request.method == 'POST':
         print(request.body)
         username = request.POST.get('username')
@@ -29,8 +32,13 @@ def login_page(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
+            
             login(request, user)
-            return redirect('product')
+            cart = json.loads(request.COOKIES['cart'])
+            if bool(cart):
+               return redirect('create_guest_cart')
+            else: 
+                return redirect('product')
     context = {}
     return render(request, 'login.html', context)
 
