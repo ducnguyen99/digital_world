@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout 
-from products import utils
+
+from django.http import HttpResponse, HttpResponseRedirect
 import json
+from products.utils import *
+from .decorators import *
 # Create your views here.
+
+@unauthenticated_user
 def register_page(request):
     form = CreateUserForm()
     if request.method == 'POST':
@@ -21,27 +26,27 @@ def register_page(request):
     }
     return render(request, 'register.html', context)
 
+@unauthenticated_user
 def login_page(request):
-
     if request.method == 'POST':
-        print(request.body)
         username = request.POST.get('username')
         password = request.POST.get('password')
-        print(username, password)
+        next_url = request.POST.get('next')
 
         user = authenticate(request, username=username, password=password)
-
+        print('before if')
         if user is not None:
-            
             login(request, user)
-            cart = json.loads(request.COOKIES['cart'])
-            if bool(cart):
-               return redirect('create_guest_cart')
-            else: 
+            if bool(next_url):
+               create_cart(request)
+               return redirect(next_url)
+            else:
+                print('next url is false')
+                create_cart(request) 
                 return redirect('product')
     context = {}
     return render(request, 'login.html', context)
 
 def logout_page(request):
     logout(request)
-    return redirect('login')
+    return redirect('product')

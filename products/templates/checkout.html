@@ -1,8 +1,4 @@
 {% extends "main.html" %} {% load static %} {% block content %}
-<script>
-    cart = {}
-    document.cookie = 'cart=' + JSON.stringify(cart) + ';domain=;path=/'
-</script>
 <div class="row">
     <div class="col-md-6 col-sm-12">
         <div class="box-element" id="form-wrapper">
@@ -53,11 +49,11 @@
 
 
         </div>
-            <br>
-            <div class="box-element hidden" id="payment-info">
-                <small>Paypal Options</small>
-                <div id="paypal-button-container"></div>
-            </div>
+        <br>
+        <div class="box-element hidden" id="payment-info">
+            <small>Paypal Options</small>
+            <div id="paypal-button-container"></div>
+        </div>
     </div>
 
     <div class="col-md-6 col-sm-12">
@@ -65,32 +61,41 @@
             <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
             <hr>
             <h3>Order Summary</h3>
-            <hr>
-            {% for item in ordered_products %}
-                <div class="cart-row align-items-center">
-                    <div class="flex-item-first">
-                        <img class="row-image" src="{{item.product.imgURL}}">
-                        <p class="d-inline-block"> <strong> {{item.product}} </strong></p>
-                    </div>
-                    <div class="flex-item d-sm-block d-md-flex justify-content-between align-items-center">
-                        <p class="quantity">x{{item.quantity}}</p>
-                        <p>${{item.total}}</p>
-                    </div>
+            <hr> {% for item in ordered_products %}
+            <div class="cart-row align-items-center">
+                <div class="flex-item-first">
+                    <img class="row-image" src="{{item.product.imgURL}}">
+                    <p class="d-inline-block"> <strong> {{item.product}} </strong></p>
                 </div>
+                <div class="flex-item d-sm-block d-md-flex justify-content-between align-items-center">
+                    <p class="quantity">x{{item.quantity}}</p>
+                    <p>${{item.total}}</p>
+                </div>
+            </div>
             {% endfor %}
-                <div class="d-flex justify-content-between">
-                    <div id="shipping-option"><p>Shipping ({{order.delivery_option}})</p></div>
-                    <div id="shipping-price"><p>${{order.delivery_price}}</p></div>
+            <div class="d-flex justify-content-between">
+                <div id="shipping-option">
+                    <p>Shipping ({{order.delivery_option}})</p>
                 </div>
+                <div id="shipping-price">
+                    <p>${{order.delivery_price}}</p>
+                </div>
+            </div>
 
-                <div class="d-flex justify-content-between">
-                    <div><p>Subtotal</p></div>
-                    <div><p>${{order.get_total_item_price}}</p></div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <p>Subtotal</p>
                 </div>
+                <div>
+                    <p>${{order.get_total_item_price}}</p>
+                </div>
+            </div>
             <hr>
             <div class="d-flex justify-content-between">
-            <h4>Order Total: </h4>
-            <div><h4>${{order.get_total_order_price}}</h4></div>
+                <h4>Order Total: </h4>
+                <div>
+                    <h4>${{order.get_total_order_price}}</h4>
+                </div>
             </div>
 
         </div>
@@ -100,36 +105,36 @@
 <script src="{% static 'products/js/checkout.js' %}"></script>
 <script src="https://www.paypal.com/sdk/js?client-id=AZVD2Yl6tISRYStEMdAINNtvL0NPapd8gHdCUqGEJP-LZLUPHeBp9ZhzpgWHsMCDSrPvK5WFvLZ2KnFE&currency=AUD"></script>
 
-    <script>
-        var total = '{{order.get_total_order_price}}' 
+<script>
+    var total = '{{order.get_total_order_price}}'
         // Render the PayPal button into #paypal-button-container
-        paypal.Buttons({
-            style: {
-                color: 'blue',
-                style: 'rect'
-            },
-            // Set up the transaction
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: parseFloat(total).toFixed(2)
-                        }
-                    }]
-                });
-            },
+    paypal.Buttons({
+        style: {
+            color: 'blue',
+            style: 'rect'
+        },
+        // Set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: parseFloat(total).toFixed(2)
+                    }
+                }]
+            });
+        },
 
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    // Show a success message to the buyer
-                    
-                    submitFormData()
-                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
-                    window.location.href = "{% url 'product'%}"
-                });
-            }
+        // Finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Show a success message to the buyer
 
-        }).render('#paypal-button-container');
-    </script>
+                submitFormData()
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                window.location.href = "{% url 'product'%}"
+            });
+        }
+
+    }).render('#paypal-button-container');
+</script>
 {% endblock content %}

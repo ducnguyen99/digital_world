@@ -4,10 +4,11 @@ from django.http import JsonResponse
 import json
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
 from .utils import *
+from .decorators import *
 
 # Create your views here.
-
 
 def product(request):
     products = Product.objects.all()
@@ -21,8 +22,11 @@ def product(request):
         'user': user,
         'total_item': total_item
     }
-    return render(request, 'product.html', context)
 
+    response = render(request, 'product.html', context)
+    if user.is_authenticated:
+        response.delete_cookie('cart')
+    return response
 
 def cart(request):
     data = cart_data(request)
@@ -36,6 +40,7 @@ def cart(request):
         'total_item_price': total_item_price
     }
     return render(request, 'cart.html', context)
+
 
 @login_required(login_url='login')
 def checkout(request):
@@ -51,7 +56,11 @@ def checkout(request):
         'ordered_products': ordered_products,
         'total_item': total_item
     }
-    return render(request, 'checkout.html', context)
+
+    response = render(request, 'checkout.html', context)
+    if user.is_authenticated:
+        response.delete_cookie('cart')
+    return response
 
 def update_cart(request):
     data = json.loads(request.body)
@@ -94,7 +103,6 @@ def update_order_delivery(request):
 
 def process_order(request):
     data = json.loads(request.body)
-    print(request.body)
     if request.user.is_authenticated:
         customer = request.user.customer 
         order, _ = Order.objects.get_or_create(customer_name=customer, status='Pending') 
@@ -113,17 +121,25 @@ def process_order(request):
     return JsonResponse('Payment submitted...', safe=False)
 
 
-def create_guest_cart(request):
-    data = cart_data(request)
-    ordered_products = data['ordered_products']
-    try:
-        cart = json.loads(request.COOKIES['cart'])
-    except:
-        cart = {}
-    print('in create')
-    customer = request.user.customer
-    order, _ = Order.objects.create(customer_name=customer, status='Pending')
-    for id in cart:
-        product = Product.objects.get(id=id)
-        OrderedProduct.objects.create(order=order, product=product)
-    return redirect('checkout')
+# def create_guest_cart(request):
+
+#     data = cart_data(request)
+#     ordered_products = data['ordered_products']
+#     try:
+#         cart = json.loads(request.COOKIES['cart'])
+#     except:
+#         cart = {}
+#     print('in create')
+#     customer = request.user.customer
+#     order, created = Order.objects.get_or_create(customer_name=customer, status='Pending')
+#     if created:
+#         for id in cart:
+#             product = Product.objects.get(id=id)
+#             OrderedProduct.objects.create(order=order, product=product)
+#     else: 
+#         order.delete()
+#         order = Order.objects.create(customer_name=customer, status='Pending')
+#         for id in cart:
+#             product = Product.objects.get(id=id)
+#             OrderedProduct.objects.create(order=order, product=product, quantity=cart[id]['quantity']) 
+#     return None

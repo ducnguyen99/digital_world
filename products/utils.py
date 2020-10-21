@@ -36,6 +36,7 @@ def cart_data(request):
         ordered_products = order.orderedproduct_set.all()
         total_item = order.get_total_item
         total_item_price = order.get_total_item_price
+        print('in user authenticated')
     else:
         cookie_data = get_cookie_cart(request)
         ordered_products = cookie_data['ordered_products']
@@ -46,3 +47,23 @@ def cart_data(request):
     return {'total_item': total_item, 'total_item_price': total_item_price, 'ordered_products': ordered_products}
 
 
+def create_cart(request):
+    try:
+        cart = json.loads(request.COOKIES['cart'])
+    except:
+        cart = {}
+
+    if bool(cart):
+
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer_name=customer, status='Pending')
+        if created:
+            for id in cart:
+                product = Product.objects.get(id=id)
+                OrderedProduct.objects.create(order=order, product=product)
+        else: 
+            order.delete()
+            order = Order.objects.create(customer_name=customer, status='Pending')
+            for id in cart:
+                product = Product.objects.get(id=id)
+                OrderedProduct.objects.create(order=order, product=product, quantity=cart[id]['quantity']) 

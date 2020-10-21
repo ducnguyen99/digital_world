@@ -16,6 +16,7 @@
             <h1 style="text-align: center">LOGIN</h1>
             <form method="POST" action=".">
                 {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}" />
                 <div class="form-group">
                     <label for="username">Username:</label>
                     <input type="text" name="username" class="form-control" placeholder="Enter your username" id="username">

@@ -10,7 +10,7 @@ urlpatterns = [
     path('update_cart/', update_cart, name='update_cart'),
     path('update_order_delivery/', update_order_delivery, name='update_order_delivery'),
     path('process_order/', process_order, name='process_order'),
-    path('create_guest_cart/', create_guest_cart, name='create_guest_cart')
+    # path('create_guest_cart/', create_guest_cart, name='create_guest_cart')
 
 ]
 
