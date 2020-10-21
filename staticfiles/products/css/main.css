@@ -1,0 +1,208 @@
+/* footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid#eaeaea;
+    background-color: rgba(94, 185, 8, 0.829);
+    color: white;
+}
+
+footer a {
+    color: white
+}
+
+footer small {
+    float: left;
+}
+
+footer ul {
+    float: right;
+    list-style: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+footer ul li {
+    float: left;
+    margin-left: 15px;
+} */
+
+
+/* Nav bar */
+
+.cart-btn {
+    position: relative;
+    cursor: pointer;
+}
+
+.cart-items {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: rgb(130, 194, 35);
+    padding: 0 5px;
+    border-radius: 60%;
+    color: white;
+    font-size: medium
+}
+
+.logo {
+    width: auto;
+    height: 100%;
+    font-size: xx-large;
+    color: greenyellow!important;
+    font-family: cursive
+}
+
+.cart {
+    width: auto;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    /* margin-left: 10px */
+}
+
+
+/* End of nav bar */
+
+
+/* product page */
+
+.box-element {
+    box-shadow: hsl(0, 0%, 80%) 0 0 16px;
+    background-color: #ffffff;
+    /* background-color: rgb(206, 60, 206); */
+    border-radius: 4px;
+    padding: 10px;
+    opacity: 1;
+}
+
+.thumbnail {
+    width: 100%;
+    height: 200px;
+    -webkit-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+    -moz-box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+    box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
+}
+
+.box-element.product {
+    border-radius: 0 0 4px 4px;
+    display: flex;
+    flex-wrap: wrap;
+    /* flex: 0 1 100px; */
+}
+
+.product-title {
+    flex: 0 0 100%;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+h4.product-price {
+    margin: 0;
+}
+
+.col-lg-4,
+.col-xl-4,
+.col-md-6,
+.col-sm-12 {
+    margin-top: 10px;
+}
+
+
+/* End of product page */
+
+
+/* Cart Summary */
+
+.row-image {
+    width: 100px;
+}
+
+.cart-row {
+    display: flex;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+    flex-wrap: nowrap;
+}
+
+.quantity {
+    margin: 0
+}
+
+.summary {
+    height: 40px;
+    width: 30%;
+}
+
+.cart-row p {
+    margin: 0;
+}
+
+.flex-item-first {
+    flex: 0 1 60%;
+}
+
+.flex-item {
+    flex: 0 1 40%;
+}
+
+.chg-quantity {
+    width: 12px;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.chg-quantity:hover {
+    opacity: .6;
+}
+
+.hidden {
+    display: none!important;
+}
+
+
+/* End of cart summary */
+
+
+/* Checkout page */
+
+.form-field {
+    width: 100%;
+    display: inline-block;
+    padding: 5px;
+}
+
+
+/* End of checkout page */
+
+
+/* Create two equal columns that sits next to each other */
+
+.column {
+    flex: 50%;
+    padding: 10px;
+    height: 300px;
+    /* Should be removed. Only for demonstration */
+}
+
+
+/* Media query for mobile viewport */
+
+@media screen and (max-width: 400px) {
+    #paypal-button-container {
+        width: 100%;
+    }
+}
+
+
+/* Media query for desktop viewport */
+
+@media screen and (min-width: 400px) {
+    #paypal-button-container {
+        width: 100%;
+    }
+}

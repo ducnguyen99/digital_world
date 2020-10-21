@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'products',
     'accounts.apps.AccountsConfig',
     'phonenumber_field',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,15 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/product_image/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+
+# S3 BUCKETS CONFIG
+
+AWS_ACCESS_KEY_ID = 'AKIA456LZICHEYHX3XSD'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'ecommerce-digital-world'
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
